@@ -40,7 +40,15 @@ export default class RTRView extends React.Component{
           custom3: 0,
           custom4: 0,
           custom5: 0
+        },
+        DailyDashboard: {
+          AgentMessageCount: 0,
+          AgentTotalResponseTime: 0,
+          AverageAgentResponseTime: 0.0,
+          SlaPercentage:0.0
+
         }
+
       }
     }
 
@@ -72,6 +80,21 @@ export default class RTRView extends React.Component{
           })
         })
       })
+
+      this.syncClient.document('DailyDashboard').then((doc) => {
+        if (Object.entries(doc.value).length === 0 && doc.value.constructor === Object) {
+          return false;
+        }
+        this.setState({
+          DailyDashboard: doc.value
+        });
+        doc.on("updated", (data) => {
+          this.setState({
+            DailyDashboard: data.value
+          })
+        })
+      })
+
     }
 
     calculateChannelCapacity(channelName) {
@@ -94,16 +117,25 @@ export default class RTRView extends React.Component{
           <div className={rtrContainer}>
             <Grid container spacing={16}>
               <Grid item xs={4} md={4}>
-                <Metric title="Voice Utilization" primary={ this.calculateChannelCapacity('voice').percentage + '%' } secondary={ this.calculateChannelCapacity('voice').available + ' Available' } />
+                <Metric title="Voice Utilization" primary={ this.calculateChannelCapacity('voice').percentage + '%' } secondary={ this.calculateChannelCapacity('voice').available + ' Available' } max="80" />
               </Grid>
               <Grid item xs={4} md={4}>
-                <Metric title="Chat Utilization" primary={ this.calculateChannelCapacity('chat').percentage + '%' } secondary={ this.calculateChannelCapacity('chat').available + ' Available' } />
+                <Metric title="Chat Utilization" primary={ this.calculateChannelCapacity('chat').percentage + '%' } secondary={ this.calculateChannelCapacity('chat').available + ' Available' } mmx="80"/>
               </Grid>
               <Grid item xs={4} md={4}>
-                <Metric title="SMS Utilization" primary={ this.calculateChannelCapacity('sms').percentage + '%' } secondary={ this.calculateChannelCapacity('sms').available + ' Available' } />
+                <Metric title="SMS Utilization" primary={ this.calculateChannelCapacity('sms').percentage + '%' } secondary={ this.calculateChannelCapacity('sms').available + ' Available' } max="80"/>
+              </Grid>
+            </Grid>
+            <Grid container spacing={16}>
+              <Grid item xs={4} md={4}>
+                <Metric title="Average Agent Response Time" primary={Math.round(this.state.DailyDashboard.AverageAgentResponseTime, 2) } secondary={ 'seconds'}  max="80"/>
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Metric title="Service Level" primary={this.state.DailyDashboard.SlaPercentage + ' %' } secondary={' baseline 98%'}  max="100" min="98"/>
               </Grid>
             </Grid>
             <RTRQueues syncClient={ this.syncClient }/>
+             
           </div>
       )
     }
