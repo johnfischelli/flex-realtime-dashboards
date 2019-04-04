@@ -29,7 +29,7 @@ const secondary = css `
 export default class Metric extends React.Component{
   render() {
     return (
-      <div className={parseInt(this.props.primary) < this.props.min ?  metricContainerRed : metricContainerGreen }>
+      <div className={(parseInt(this.props.primary) >= this.props.min && parseInt(this.props.primary) <= this.props.max) ?  metricContainerGreen : metricContainerRed }>
         <h1>{this.props.title}</h1>
         <p className={primary}>{ this.props.primary }</p>
         <p className={secondary}>{ this.props.secondary }</p>
