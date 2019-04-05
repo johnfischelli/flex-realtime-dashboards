@@ -128,13 +128,22 @@ export default class RTRView extends React.Component{
             </Grid>
             <Grid container spacing={16}>
               <Grid item xs={4} md={4}>
-                <Metric title="Average Agent Response Time" primary={Math.round(this.state.DailyDashboard.AverageAgentResponseTime, 2) } secondary={ 'seconds'}  max="30" min="0"/>
+                <Metric title="Voice Service Level" primary={this.state.DailyDashboard.SlaVoicePercentage + '%' } secondary={' baseline 85%'}  max="100" min="85"/>
               </Grid>
               <Grid item xs={4} md={4}>
-                <Metric title="Service Level" primary={this.state.DailyDashboard.SlaPercentage + ' %' } secondary={' baseline 85%'}  max="100" min="85"/>
+                <Metric title="Chat Service Level" primary={this.state.DailyDashboard.SlaChatPercentage + ' %' } secondary={' baseline 85%'}  max="100" min="85"/>
               </Grid>
               <Grid item xs={4} md={4}>
-                <Metric title="Total Chats" primary={this.state.DailyDashboard.TotalMessages } secondary={'today'} max={this.state.DailyDashboard.TotalMessages } min="0" />
+                <Metric title="Average Chat Agent Response Time" primary={Math.round(this.state.DailyDashboard.AverageAgentResponseTime, 2) } secondary={ 'seconds'}  max="30" min="0"/>
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Metric title="Total Calls" primary={this.state.DailyDashboard.TotalVoiceMessages } secondary={'today'} max={this.state.DailyDashboard.TotalVoiceMessages } min="0" />
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Metric title="Total Chats" primary={this.state.DailyDashboard.TotalChatMessages } secondary={'today'} max={this.state.DailyDashboard.TotalChatMessages } min="0" />
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Metric title="Total Agents Online" primary={this.state.DailyDashboard.TotalAgentsAvailable } secondary={'today'} max={this.state.DailyDashboard.TotalAgentsAvailable } min="1" />
               </Grid>
             </Grid>
             <RTRQueues syncClient={ this.syncClient }/>
