@@ -12,6 +12,7 @@ const table = css `
 
 const tableHeaderCell = css `
   background: #333;
+  color: #fff;
   text-transform: initial !important;
   letter-spacing: 0 !important;
   padding-top: 5px !important;
