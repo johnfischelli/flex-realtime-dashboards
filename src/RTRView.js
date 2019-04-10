@@ -146,13 +146,6 @@ export default class RTRView extends React.Component{
               <Grid item xs={4} md={4}>
                 <Metric title="Total Agents Online" primary={this.state.DailyDashboard.TotalAgentsAvailable } secondary={'today'} max={this.state.DailyDashboard.TotalAgentsAvailable } min="1" />
               </Grid>
-              <Grid item xs={4} md={4}>
-                <Metric title="Current Wrapups" primary={this.state.DailyDashboard.CurrentWrapUps } secondary={'Agent in Wrapup'} max={this.state.DailyDashboard.CurrentWrapUps } min="0" />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Metric title="Average Wrapup Time" primary={this.state.DailyDashboard.AverageWrapUpTime } secondary={'today'} max="8" min="1" />
-              </Grid>
-
             </Grid>
             <RTRQueues syncClient={ this.syncClient }/>
 
