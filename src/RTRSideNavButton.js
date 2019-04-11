@@ -7,8 +7,8 @@ export default class RTRSideNavButton extends React.Component{
     render() {
         return <SideLink
             {...this.props}
-            icon='Data'
-            iconActive='DataBold'
+            icon='Bulb'
+            iconActive='BulbBold'
             isActive={this.props.activeView === 'realtime'}
             onClick={() => Actions.invokeAction('NavigateToView', {viewName: 'realtime'})}>Realtime</SideLink>
             ;
